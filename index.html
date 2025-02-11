@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alldownload.com - Download Videos from Social Media</title>
+    <meta name="description" content="Download HD videos from YouTube, TikTok, Instagram, Facebook, and Twitter/X in MP4, MP3, 4K formats. Fast, free, and secure video downloader">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --bg: #ffffff;
+            --text: #1f2937;
+        }
+
+        [data-theme="dark"] {
+            --bg: #1f2937;
+            --text: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+
+        /* Main Content */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .download-box {
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 1rem;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid var(--primary);
+            border-radius: 0.5rem;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+        }
+
+        .download-btn {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .download-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Platform Grid */
+        .platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .platform-card {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .download-box {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Dark Mode Styles */
+        [data-theme="dark"] .download-box {
+            background: rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Alldownload.com</h1>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <div class="hero">
+                <h2>Download Videos from Any Platform</h2>
+                <p>Fast, Free, and High-Quality Downloads</p>
+            </div>
+
+            <!-- Download Box -->
+            <div class="download-box">
+                <div class="ai-detection">
+                    <i class="fas fa-link"></i>
+                    <input type="text" 
+                           class="url-input" 
+                           placeholder="Paste video URL here..."
+                           oninput="detectPlatform()">
+                </div>
+                
+                <div class="format-selection">
+                    <select class="format-select">
+                        <option>MP4 1080p</option>
+                        <option>MP4 4K</option>
+                        <option>MP3 320kbps</option>
+                    </select>
+                    <button class="download-btn">Download Now</button>
+                </div>
+            </div>
+
+            <!-- Supported Platforms -->
+            <div class="platforms">
+                <div class="platform-card">
+                    <i class="fab fa-youtube fa-3x"></i>
+                    <h3>YouTube</h3>
+                </div>
+                <div class="platform-card">
+                    <i class="fab fa-tiktok fa-3x"></i>
+                    <h3>TikTok</h3>
+                </div>
+                <div class="platform-card">
+                    <i class="fab fa-instagram fa-3x"></i>
+                    <h3>Instagram</h3>
+                </div>
+                <div class="platform-card">
+                    <i class="fab fa-facebook fa-3x"></i>
+                    <h3>Facebook</h3>
+                </div>
+                <div class="platform-card">
+                    <i class="fab fa-twitter fa-3x"></i>
+                    <h3>Twitter/X</h3>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Dark Mode Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', theme);
+            
+            // Save user preference
+            localStorage.setItem('theme', theme);
+            
+            // Update toggle icon
+            const toggleBtn = document.querySelector('.theme-toggle');
+            toggleBtn.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+
+        // AI Platform Detection
+        function detectPlatform() {
+            const input = document.querySelector('.url-input');
+            const value = input.value.toLowerCase();
+            
+            // Add detection logic here
+            // This is a simplified example
+            if(value.includes('youtube')) {
+                input.style.borderColor = '#FF0000';
+            } else if(value.includes('tiktok')) {
+                input.style.borderColor = '#000000';
+            } else {
+                input.style.borderColor = 'var(--primary)';
+            }
+        }
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>
